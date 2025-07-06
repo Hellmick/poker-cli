@@ -16,6 +16,10 @@ func newCard(rank string, suit string) *Card {
 	return &card
 }
 
+func (card *Card) Print() {
+	fmt.Printf("%s%s\n",card.rank, card.suit)
+}
+
 type Deck struct {
 	cards []Card
 }
@@ -42,8 +46,12 @@ func (deck *Deck) Pop() (Card, error) {
 	if deck.IsEmpty() {
 		return Card{}, fmt.Errorf("Deck is empty")
 	}
+	topCard, err := deck.Top()
+	if err != nil {
+		return Card{}, err
+	}
 	deck.cards = deck.cards[:len(deck.cards)-1]
-	return deck.Top()
+	return topCard, nil
 }
 
 func (deck *Deck) IsEmpty() bool {
