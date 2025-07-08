@@ -7,33 +7,43 @@ import (
 
 
 type Card struct {
-	rank	string
-	suit	string
+	Rank	string
+	Suit	string
 }
 
-func newCard(rank string, suit string) *Card {
-	card := Card{rank: rank, suit:suit}
+func NewCard(rank string, suit string) *Card {
+	card := Card{Rank: rank, Suit:suit}
 	return &card
 }
 
 func (card *Card) Print() {
-	fmt.Printf("%s%s\n",card.rank, card.suit)
+	fmt.Printf("%s%s\n",card.Rank, card.Suit)
 }
 
 type Deck struct {
 	cards []Card
 }
 
+var Ranks = [13]string{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}
+var Suits = [4]string{"S","H","D","C"}
+
+
 func NewDeck() *Deck {
 	deck := Deck{}
-	ranks := [13]string{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}
-	suits := [4]string{"S","H","D","C"}
-
-	for _, rank := range ranks {
-		for _, suit := range suits {
-			card := newCard(rank, suit)
+	for _, rank := range Ranks {
+		for _, suit := range Suits {
+			card := NewCard(rank, suit)
 			deck.Push(*card)
 		}
+	}
+	return &deck
+}
+
+func NewSingleSuitDeck() *Deck {
+	deck := Deck{}
+	for _, rank := range Ranks {
+		card := NewCard(rank, "S")
+		deck.Push(*card)
 	}
 	return &deck
 }
