@@ -5,19 +5,17 @@ import (
 	"math/rand"
 )
 
-
 type Card struct {
-	Rank	string
-	Suit	string
+	Rank string
+	Suit string
 }
 
 func NewCard(rank string, suit string) *Card {
-	card := Card{Rank: rank, Suit:suit}
-	return &card
+	return &Card{Rank: rank, Suit: suit}
 }
 
 func (card *Card) Print() {
-	fmt.Printf("%s%s\n",card.Rank, card.Suit)
+	fmt.Printf("%s%s\n", card.Rank, card.Suit)
 }
 
 type Deck struct {
@@ -25,8 +23,17 @@ type Deck struct {
 }
 
 var Ranks = [13]string{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}
-var Suits = [4]string{"S","H","D","C"}
+var Suits = [4]string{"S", "H", "D", "C"}
 
+// the index is numerated from 1, if the function returns 0 the input rank is not in the rank list
+func RankIndex(baseRank string) int {
+	for i, rank := range Ranks {
+		if baseRank == rank {
+			return i + 1
+		}
+	}
+	return 0
+}
 
 func NewDeck() *Deck {
 	deck := Deck{}
@@ -68,7 +75,7 @@ func (deck *Deck) IsEmpty() bool {
 	if len(deck.cards) == 0 {
 		return true
 	}
-	return false		
+	return false
 }
 
 func (deck *Deck) Top() (Card, error) {
@@ -88,7 +95,6 @@ func (deck *Deck) Print() {
 func (deck *Deck) Shuffle() {
 	for i := range deck.cards {
 		j := rand.Intn(i + 1)
-		deck.cards[i], deck.cards[j] = deck.cards[j], deck.cards[i] 
+		deck.cards[i], deck.cards[j] = deck.cards[j], deck.cards[i]
 	}
 }
-
