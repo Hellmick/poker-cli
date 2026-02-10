@@ -328,11 +328,6 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Printf("Table\n")
-	for _, card := range table.board {
-		card.Print()
-	}
-
 	for _, seat := range table.seats {
 		allCards := append(seat.hand, table.board...)
 		strongest, handType := strongestSet(allCards)
